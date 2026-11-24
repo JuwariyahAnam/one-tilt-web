@@ -2,6 +2,8 @@
 
 **Browse any website with a tilt of your head. No hands, no mouse, no keyboard.**
 
+[![tests](https://github.com/JuwariyahAnam/one-tilt-web/actions/workflows/tests.yml/badge.svg)](https://github.com/JuwariyahAnam/one-tilt-web/actions/workflows/tests.yml)
+
 wHACKiest 2026 · Track 2 (T-2): Beyond the Browser
 Team Byte By Byte · Dayananda Sagar Academy of Technology and Management, Bengaluru
 Deepankar Anand (Lead) · Juwariyah Anam
