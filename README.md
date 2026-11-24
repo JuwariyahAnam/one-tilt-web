@@ -5,7 +5,7 @@
   <a href="#how-it-works">How it works</a> ·
   <a href="docs/hardware.md">Build the headband</a> ·
   <a href="#aws-backend">AWS backend</a> ·
-  <a href="https://github.com/JuwariyahAnam/one-tilt-web/releases/latest">Download</a>
+  <a href="https://github.com/JuwariyahAnam/one-tilt-web/archive/refs/heads/main.zip">Download</a>
 </p>
 
 <p align="center">
@@ -50,8 +50,8 @@ Everything works **on-device with no API keys**. The AWS backend makes the choic
 
 ## Try it in 2 minutes (no headband needed)
 
-1. Download [**one-tilt-web-extension.zip**](https://github.com/JuwariyahAnam/one-tilt-web/releases/latest/download/one-tilt-web-extension.zip) and unzip it (or clone this repo and use the `extension` folder).
-2. In Chrome, open `chrome://extensions`, switch on **Developer mode**, click **Load unpacked** and pick the unzipped folder.
+1. [**Download this repo as a ZIP**](https://github.com/JuwariyahAnam/one-tilt-web/archive/refs/heads/main.zip) and unzip it.
+2. In Chrome, open `chrome://extensions`, switch on **Developer mode**, click **Load unpacked** and pick the `extension` folder inside it.
 3. A practice page opens. Click the One-Tilt icon in the toolbar (pin it from the puzzle-piece menu) to open the side panel.
 4. Move with the **Try it without the headband** buttons, or the keyboard:
    `Alt+Shift+→` next · `Alt+Shift+←` previous · `Alt+Shift+↓` nod (choose) · `Alt+Shift+↑` look up (speak)
