@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>One-Tilt practice: book a doctor</title>
+  <link rel="stylesheet" href="practice.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">One-Tilt Web · practice page</p>
+      <h1>Book a doctor’s appointment, hands-free</h1>
+      <p>Use the four big choices at the bottom of the screen. <b>Tilt right</b> to move, <b>nod</b> to choose, <b>look up</b> to speak.
+        No headband yet? Use the buttons in the side panel or <kbd>Alt</kbd>+<kbd>Shift</kbd>+arrow keys.</p>
+      <button id="openPanel" class="cta">Open the One-Tilt side panel</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <h2>City Care Clinic</h2>
+      <form id="booking" autocomplete="off">
+        <label>Your name <input name="name" placeholder="Full name"></label>
+        <label>Phone number <input name="phone" type="tel" placeholder="10-digit mobile"></label>
+        <label>Doctor
+          <select name="doctor">
+            <option value="">Choose a doctor</option>
+            <option>Dr. Asha Rao - General physician</option>
+            <option>Dr. Imran Khan - Physiotherapy</option>
+            <option>Dr. Meera Iyer - Neurology</option>
+          </select>
+        </label>
+        <label>Day
+          <select name="day">
+            <option value="">Choose a day</option>
+            <option>Today</option>
+            <option>Tomorrow</option>
+            <option>Day after tomorrow</option>
+          </select>
+        </label>
+        <fieldset>
+          <legend>Time of day</legend>
+          <label class="inline"><input type="radio" name="time" value="Morning"> Morning</label>
+          <label class="inline"><input type="radio" name="time" value="Afternoon"> Afternoon</label>
+          <label class="inline"><input type="radio" name="time" value="Evening"> Evening</label>
+        </fieldset>
+        <label class="inline"><input type="checkbox" name="sms"> Send me an SMS reminder</label>
+        <button type="submit" class="submit">Book appointment</button>
+      </form>
+      <div id="done" class="done" hidden></div>
+    </section>
+
+    <section class="card">
+      <h2>Then try a real website</h2>
+      <ul class="links">
+        <li><a href="https://www.youtube.com/results?search_query=calm+relaxing+music">Play calm music on YouTube</a></li>
+        <li><a href="https://www.google.com/search?q=weather+bengaluru">Check today’s weather</a></li>
+        <li><a href="https://en.wikipedia.org/wiki/Assistive_technology">Read about assistive technology</a></li>
+      </ul>
+      <p class="note">On any site, look up and say things like “play Arijit Singh songs”, “scroll down”, “go back”, or “Arijit Singh ke gaane bajao”.</p>
+    </section>
+  </main>
+
+  <script src="../shared/settings.js"></script>
+  <script src="practice.js"></script>
+  <script src="../content/engine.js"></script>
+  <script src="../content/overlay.js"></script>
+</body>
+</html>

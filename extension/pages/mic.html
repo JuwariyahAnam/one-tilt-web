@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>One-Tilt: allow microphone</title>
+  <style>
+    body { font: 18px/1.5 "Segoe UI", system-ui, sans-serif; background: #f6f3ff; color: #1b143a; display: grid; place-items: center; min-height: 100vh; margin: 0; }
+    .card { background: #fff; border-radius: 20px; padding: 32px 36px; max-width: 520px; text-align: center; border: 4px solid #3B2A80; }
+    h1 { color: #3B2A80; margin-top: 0; }
+    button { font: inherit; font-weight: 800; background: #F28C28; border: 0; border-radius: 12px; padding: 12px 22px; cursor: pointer; }
+    #msg { margin-top: 16px; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Allow the microphone once</h1>
+    <p>One-Tilt listens only when the user looks up (or presses “Look up”). Chrome needs permission one time.</p>
+    <button id="allow">Allow microphone</button>
+    <p id="msg"></p>
+  </div>
+  <script src="mic.js"></script>
+</body>
+</html>

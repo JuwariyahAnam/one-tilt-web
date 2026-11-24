@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "One-Tilt Web",
+  "short_name": "One-Tilt",
+  "version": "0.1.0",
+  "description": "Browse any website hands-free: four big choices, picked with a head tilt, a nod or your voice.",
+  "minimum_chrome_version": "116",
+  "permissions": ["storage", "sidePanel", "tts", "scripting", "tabs"],
+  "host_permissions": ["<all_urls>"],
+  "background": { "service_worker": "background.js" },
+  "action": {
+    "default_title": "One-Tilt Web - open the control panel",
+    "default_icon": { "16": "icons/icon16.png", "32": "icons/icon32.png", "48": "icons/icon48.png", "128": "icons/icon128.png" }
+  },
+  "icons": { "16": "icons/icon16.png", "32": "icons/icon32.png", "48": "icons/icon48.png", "128": "icons/icon128.png" },
+  "side_panel": { "default_path": "sidepanel/sidepanel.html" },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["shared/settings.js", "content/engine.js", "content/overlay.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    { "resources": ["content/overlay.css"], "matches": ["<all_urls>"] }
+  ],
+  "commands": {
+    "tilt-left": { "suggested_key": { "default": "Alt+Shift+Left" }, "description": "Tilt left - previous choice" },
+    "tilt-right": { "suggested_key": { "default": "Alt+Shift+Right" }, "description": "Tilt right - next choice" },
+    "nod": { "suggested_key": { "default": "Alt+Shift+Down" }, "description": "Nod - choose" },
+    "look-up": { "suggested_key": { "default": "Alt+Shift+Up" }, "description": "Look up - speak a command" }
+  }
+}

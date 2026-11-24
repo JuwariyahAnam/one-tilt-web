@@ -1,0 +1,8 @@
+node_modules/
+.env
+.aws-sam/
+samconfig.toml
+*.log
+.DS_Store
+firmware/test/gesture_test
+firmware/test/gesture_test.exe

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>One-Tilt Web</title>
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+  <header>
+    <svg class="logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="13" r="7.5"/><path d="M3.5 9.5L20.5 5" stroke-width="2.6"/><circle cx="9.5" cy="13" r=".9" fill="currentColor"/><circle cx="14.5" cy="13" r=".9" fill="currentColor"/><path d="M9.5 16.2c1.4 1 3.6 1 5 0"/></svg>
+    <div>
+      <h1>One-Tilt Web</h1>
+      <p class="sub">Browse any website with a tilt of the head</p>
+    </div>
+    <label class="switch" title="Show the four-choice overlay on web pages"><input type="checkbox" data-key="active"><span></span></label>
+  </header>
+
+  <section class="card" id="headband">
+    <div class="row space">
+      <h2>Headband</h2>
+      <span class="pill" id="hbStatus">Not connected</span>
+    </div>
+    <div class="hb-grid">
+      <svg id="headViz" viewBox="0 0 180 180" aria-label="Live head position">
+        <circle cx="90" cy="90" r="86" class="viz-bg"/>
+        <line x1="90" y1="6" x2="90" y2="174" class="viz-axis"/><line x1="6" y1="90" x2="174" y2="90" class="viz-axis"/>
+        <line id="thrL" class="viz-thr" y1="20" y2="160"/><line id="thrR" class="viz-thr" y1="20" y2="160"/>
+        <line id="thrU" class="viz-thr" x1="20" x2="160"/><line id="thrD" class="viz-thr" x1="20" x2="160"/>
+        <text x="12" y="94" class="viz-lbl">L</text><text x="160" y="94" class="viz-lbl">R</text>
+        <text x="86" y="18" class="viz-lbl">UP</text><text x="80" y="172" class="viz-lbl">NOD</text>
+        <circle id="headDot" cx="90" cy="90" r="11"/>
+      </svg>
+      <div class="hb-actions">
+        <button id="btnConnect" class="primary">Connect headband</button>
+        <button id="btnCalibrate" disabled>Calibrate (keep still)</button>
+        <button id="btnBuzz" disabled>Test buzz</button>
+        <p class="tiny" id="serialNote">Plug the Nano in by USB, then connect. Chrome remembers it next time.</p>
+      </div>
+    </div>
+    <details>
+      <summary>Sensitivity &amp; mounting</summary>
+      <label class="slider">Tilt needed <b><span id="vTilt">18</span>°</b><input type="range" id="sTilt" min="6" max="40" value="18"></label>
+      <label class="slider">Nod needed <b><span id="vNod">12</span>°</b><input type="range" id="sNod" min="6" max="40" value="12"></label>
+      <label class="slider">Look-up needed <b><span id="vLook">15</span>°</b><input type="range" id="sLook" min="6" max="40" value="15"></label>
+      <div class="checks">
+        <label><input type="checkbox" id="oSwap"> Sensor turned 90°</label>
+        <label><input type="checkbox" id="oInvR"> Flip left/right</label>
+        <label><input type="checkbox" id="oInvP"> Flip up/down</label>
+      </div>
+      <p class="tiny">Lower numbers suit people with very small head movement. Settings are saved on the headband.</p>
+    </details>
+  </section>
+
+  <section class="card">
+    <div class="row space"><h2>Try it without the headband</h2></div>
+    <div class="sim">
+      <button data-g="LEFT"><span>&#9664;</span>Tilt left</button>
+      <button data-g="NOD"><span>&#10003;</span>Nod</button>
+      <button data-g="RIGHT"><span>&#9654;</span>Tilt right</button>
+      <button data-g="UP"><span>&#9650;</span>Look up (speak)</button>
+      <button data-g="HELP" class="danger"><span>!</span>Hold up 3 s</button>
+    </div>
+    <p class="tiny">Keyboard: <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>&larr;</kbd>/<kbd>&rarr;</kbd> move, <kbd>&darr;</kbd> nod, <kbd>&uarr;</kbd> look up.</p>
+    <div class="row">
+      <button id="btnPractice">Open practice page</button>
+      <button id="btnMic">Allow microphone</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Voice</h2>
+    <label class="field">Language
+      <select data-key="lang"><option value="en-IN">English (India)</option><option value="hi-IN">हिन्दी (Hindi)</option></select>
+    </label>
+    <label class="field">Read-out voice
+      <select data-key="voiceOutput"><option value="chrome">Chrome voice (free, offline)</option><option value="elevenlabs">ElevenLabs (natural, via backend)</option></select>
+    </label>
+    <label class="field">Listening
+      <select data-key="speechInput"><option value="browser">Chrome speech recognition</option><option value="elevenlabs">ElevenLabs Scribe (via backend)</option></select>
+    </label>
+    <label class="check"><input type="checkbox" data-key="readAloud"> Read each choice aloud</label>
+  </section>
+
+  <section class="card">
+    <h2>Speak for me</h2>
+    <label class="field">Phrases (one per line)
+      <textarea data-key="phrases" rows="5"></textarea>
+    </label>
+    <details>
+      <summary>Use my own voice (ElevenLabs voice cloning)</summary>
+      <p class="tiny">Upload 1–3 short, clear recordings of the user's voice (from before their illness is ideal). Needs the backend and an ElevenLabs plan with voice cloning.</p>
+      <input type="file" id="cloneFiles" accept="audio/*" multiple>
+      <div class="row"><input type="text" id="cloneName" placeholder="Voice name, e.g. Ravi"><button id="btnClone">Create voice</button></div>
+      <p class="tiny" id="cloneStatus"></p>
+    </details>
+  </section>
+
+  <section class="card">
+    <h2>Help alert</h2>
+    <label class="field">Who gets the alert (shown on screen)
+      <input type="text" data-key="contactName">
+    </label>
+    <label class="field">Seconds to cancel
+      <input type="number" data-key="helpCountdown" min="3" max="15">
+    </label>
+    <p class="tiny">Looking up for 3 seconds starts the countdown. With the backend, Amazon SNS texts the family; without it, the laptop calls for help out loud.</p>
+  </section>
+
+  <section class="card">
+    <div class="row space"><h2>AI backend (AWS)</h2><span class="pill" id="beStatus">Off</span></div>
+    <label class="field">API URL<input type="url" data-key="backendUrl" placeholder="https://xxxx.execute-api.ap-south-1.amazonaws.com"></label>
+    <label class="field">API key<input type="password" data-key="apiKey" placeholder="from your deploy"></label>
+    <label class="check"><input type="checkbox" data-key="useAI"> Let Amazon Bedrock pick the best choices</label>
+    <div class="row"><button id="btnTest">Test connection</button></div>
+    <p class="tiny" id="beDetail">Everything works on-device without this. The backend adds Bedrock, ElevenLabs and SMS alerts.</p>
+  </section>
+
+  <section class="card">
+    <h2>Activity</h2>
+    <ol id="log"></ol>
+  </section>
+
+  <script src="../shared/settings.js"></script>
+  <script src="serial.js"></script>
+  <script src="sidepanel.js"></script>
+</body>
+</html>

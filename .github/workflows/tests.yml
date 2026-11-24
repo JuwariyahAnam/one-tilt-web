@@ -1,0 +1,21 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Firmware gesture engine (host build)
+        run: g++ -std=c++11 -Wall -Wextra -o gesture_test firmware/test/gesture_test.cpp && ./gesture_test
+      - name: Backend (Lambda handler, Bedrock/ElevenLabs/SNS mocked)
+        working-directory: backend
+        run: node --test test/*.test.mjs
+      - name: Extension scripts parse
+        run: for f in extension/*.js extension/*/*.js; do node --check "$f"; done
