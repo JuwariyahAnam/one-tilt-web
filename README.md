@@ -1,16 +1,41 @@
-# One-Tilt Web
+<p align="center"><img src="docs/images/banner.png" alt="One-Tilt Web: browse any website with a tilt of your head"></p>
 
-**Browse any website with a tilt of your head. No hands, no mouse, no keyboard.**
+<p align="center">
+  <a href="#try-it-in-2-minutes-no-headband-needed"><b>Try it in 2 minutes</b></a> ·
+  <a href="#how-it-works">How it works</a> ·
+  <a href="docs/hardware.md">Build the headband</a> ·
+  <a href="#aws-backend">AWS backend</a> ·
+  <a href="https://github.com/JuwariyahAnam/one-tilt-web/releases/latest">Download</a>
+</p>
 
-[![tests](https://github.com/JuwariyahAnam/one-tilt-web/actions/workflows/tests.yml/badge.svg)](https://github.com/JuwariyahAnam/one-tilt-web/actions/workflows/tests.yml)
+<p align="center">
+  <a href="https://github.com/JuwariyahAnam/one-tilt-web/actions/workflows/tests.yml"><img src="https://github.com/JuwariyahAnam/one-tilt-web/actions/workflows/tests.yml/badge.svg" alt="tests"></a>
+  <img src="https://img.shields.io/badge/wHACKiest_2026-Track_2:_Beyond_the_Browser-F28C28" alt="wHACKiest 2026 Track 2">
+  <img src="https://img.shields.io/badge/AWS-Bedrock_·_Lambda_·_SNS_·_DynamoDB-3B2A80" alt="AWS">
+  <img src="https://img.shields.io/badge/ElevenLabs-Scribe_·_TTS_·_Voice_cloning-3B2A80" alt="ElevenLabs">
+  <img src="https://img.shields.io/badge/license-MIT-555" alt="MIT license">
+</p>
 
-wHACKiest 2026 · Track 2 (T-2): Beyond the Browser
-Team Byte By Byte · Dayananda Sagar Academy of Technology and Management, Bengaluru
-Deepankar Anand (Lead) · Juwariyah Anam
+**Team Byte By Byte** · Dayananda Sagar Academy of Technology and Management, Bengaluru · Deepankar Anand (Lead) · Juwariyah Anam
 
-![One-Tilt turning a clinic booking page into four big choices](docs/screenshots/practice-overlay.png)
+## The problem
 
-A ₹600 sensor headband and a Chrome extension that turn **any website into four big choices**. The user tilts their head to move between them, nods to choose, looks up to speak a command, and keeps looking up for 3 seconds to call for help.
+The web assumes you have hands. About **54 lakh Indians** live with a movement disability (Census of India 2011): cerebral palsy, spinal cord injury, stroke, ALS, severe tremor. Banking, government forms, jobs and classes have all moved online, so every click needs someone else's help. Eye trackers cost ₹1 lakh or more, switch scanning is slow and tiring, voice assistants fail on unclear speech, and screen readers are built for blind users, not for people who can't move.
+
+## Our approach: no cursor, just four big choices
+
+One-Tilt Web is a **₹600 sensor headband** plus a **Chrome extension** that turns **any website into four big choices**. Tilt your head to move between them, nod to choose, look up to speak, and keep looking up for 3 seconds to call for help.
+
+<p align="center"><img src="docs/images/demo.gif" width="880" alt="Demo: booking an appointment hands-free, then playing a song on YouTube with a Hindi voice command"></p>
+<p align="center"><sub>Recorded by our automated end-to-end test in Chrome. The Google and YouTube scenes use offline copies of those pages.</sub></p>
+
+### What makes it different
+
+- **No cursor.** Head-mouse tools make users steer a pointer onto tiny targets. One-Tilt removes the pointer: every page becomes four big targets.
+- **Any website, no changes needed.** It reads the page as it is. YouTube and Google get extra-smart choices.
+- **Works without internet services.** The core runs on-device; Amazon Bedrock and ElevenLabs make it smarter and more natural, not possible.
+- **Safe by design.** Submit, pay, send or delete need a second nod. The help alert gives 5 seconds to cancel and sends at most one text a minute.
+- **Affordable.** About ₹600 in parts against ₹1 lakh+ for eye trackers.
 
 ## Status: working MVP
 
@@ -25,8 +50,8 @@ Everything works **on-device with no API keys**. The AWS backend makes the choic
 
 ## Try it in 2 minutes (no headband needed)
 
-1. Download this repo (**Code → Download ZIP**) and unzip it.
-2. In Chrome, open `chrome://extensions`, switch on **Developer mode**, click **Load unpacked** and pick the `extension` folder.
+1. Download [**one-tilt-web-extension.zip**](https://github.com/JuwariyahAnam/one-tilt-web/releases/latest/download/one-tilt-web-extension.zip) and unzip it (or clone this repo and use the `extension` folder).
+2. In Chrome, open `chrome://extensions`, switch on **Developer mode**, click **Load unpacked** and pick the unzipped folder.
 3. A practice page opens. Click the One-Tilt icon in the toolbar (pin it from the puzzle-piece menu) to open the side panel.
 4. Move with the **Try it without the headband** buttons, or the keyboard:
    `Alt+Shift+→` next · `Alt+Shift+←` previous · `Alt+Shift+↓` nod (choose) · `Alt+Shift+↑` look up (speak)
@@ -63,14 +88,6 @@ flowchart LR
 4. **AI (optional):** the labels go to Lambda, where Amazon Bedrock (Converse API with a forced tool call, so the output is always valid JSON) picks the three most useful actions and writes short labels. It also turns spoken commands the on-device rules don't understand into one action.
 5. **Output:** the extension clicks, types or scrolls, reads the choice aloud (Chrome voice or ElevenLabs) and the headband buzzes.
 
-## What makes it different
-
-- **No cursor.** Head-mouse tools make users steer a pointer onto tiny targets. One-Tilt removes the pointer: every page becomes four big targets.
-- **Any website, no changes needed.** It reads the page as it is. YouTube and Google get extra-smart choices.
-- **Works without internet services.** The core runs on-device; Bedrock and ElevenLabs make it better, not possible.
-- **Safe by design.** A second nod is required for submit, pay, send or delete. The help alert gives 5 seconds to cancel and sends at most one text a minute.
-- **Affordable.** About ₹600 in parts against ₹1 lakh+ for eye trackers.
-
 ## Gestures and voice
 
 | Do this | It does |
@@ -84,7 +101,9 @@ Voice commands (English or Hindi): *scroll down / neeche*, *go back / peeche jao
 
 ## Hardware
 
-About ₹600: Arduino Nano, MPU6050, coin vibration motor, transistor, arcade button and a headband. Parts list, wiring, mounting and flashing steps are in [docs/hardware.md](docs/hardware.md). The firmware needs no extra libraries.
+About ₹600: Arduino Nano, MPU6050, coin vibration motor, transistor, arcade button and a headband. The firmware needs no extra libraries. Parts list, mounting and flashing steps are in [docs/hardware.md](docs/hardware.md).
+
+<p align="center"><img src="docs/images/wiring.png" width="820" alt="Wiring: MPU6050 to Nano 5V, GND, A4, A5; motor via 2N2222 on D3; button on D2"></p>
 
 ## AWS backend
 
@@ -146,7 +165,7 @@ extension/                    Chrome extension (Manifest V3)
   pages/                      Practice page, microphone permission
 backend/                      AWS SAM app: Lambda handler, Bedrock, ElevenLabs, SNS, DynamoDB
 tests/e2e/                    Real-Chrome tests with YouTube/Google-like pages
-docs/                         Hardware guide, screenshots
+docs/                         Hardware guide, wiring diagram, demo GIF, screenshots
 ```
 
 ## Roadmap

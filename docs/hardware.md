@@ -18,6 +18,8 @@ Prices are typical Indian retail (Robu, Amazon, local electronics markets) and v
 
 ## Wiring
 
+![Wiring diagram](images/wiring.png)
+
 ```
 MPU6050 (GY-521)        Arduino Nano
   VCC  ───────────────── 5V
