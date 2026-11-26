@@ -41,12 +41,12 @@ One-Tilt Web is a **₹600 sensor headband** plus a **Chrome extension** that tu
 
 | Part | What works now | Proof |
 | --- | --- | --- |
-| **Headband firmware** (Arduino Nano + MPU6050) | Tilt / nod / look-up / help detection, calibration, drift correction, haptic buzz, backup button, settings saved in EEPROM | 18 gesture-engine tests |
+| **Headband firmware** (Arduino Nano + MPU6050) | Written and tested in software: tilt / nod / look-up / help detection, calibration, drift correction, haptic buzz, backup button, settings saved in EEPROM. The headband itself is not assembled yet. | 18 gesture-engine tests |
 | **Chrome extension** | Four-choice overlay on any site, smarter choices on YouTube and Google, forms filled by voice, dropdowns as big choices, confirm before submit, voice commands in English and Hindi, "Speak for me", help alert, read page aloud | 33 end-to-end checks in real Chrome |
 | **Side panel** | USB headband connection (Web Serial), live head-position view, calibration and sensitivity, gesture simulator, all settings | Screenshot below |
 | **AWS backend** | API Gateway + Lambda (SAM template), Amazon Bedrock ranks choices and understands commands, DynamoDB settings, SNS help texts, ElevenLabs speech, Scribe and voice cloning | 13 handler tests (AWS and ElevenLabs mocked) |
 
-Everything works **on-device with no API keys**. The AWS backend makes the choices smarter and adds natural voices and SMS alerts. Next: build the electronics into the band and connect our live AWS and ElevenLabs accounts.
+Everything works **on-device with no API keys**. The AWS backend makes the choices smarter and adds natural voices and SMS alerts. Until the headband is assembled, the side panel's simulator buttons and keyboard shortcuts send exactly the same gestures. Next: assemble the headband (about ₹600 of parts) and connect our live AWS and ElevenLabs accounts.
 
 ## Try it in 2 minutes (no headband needed)
 
