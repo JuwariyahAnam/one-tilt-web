@@ -10,9 +10,9 @@
 
 <p align="center">
   <a href="https://github.com/JuwariyahAnam/one-tilt-web/actions/workflows/tests.yml"><img src="https://github.com/JuwariyahAnam/one-tilt-web/actions/workflows/tests.yml/badge.svg" alt="tests"></a>
-  <img src="https://img.shields.io/badge/wHACKiest_2026-Track_2:_Beyond_the_Browser-F28C28" alt="wHACKiest 2026 Track 2">
-  <img src="https://img.shields.io/badge/AWS-Bedrock_·_Lambda_·_SNS_·_DynamoDB-3B2A80" alt="AWS">
-  <img src="https://img.shields.io/badge/ElevenLabs-Scribe_·_TTS_·_Voice_cloning-3B2A80" alt="ElevenLabs">
+  <img src="https://img.shields.io/badge/wHACKiest_2026-Track_2:_Beyond_the_Browser-3F7FC4" alt="wHACKiest 2026 Track 2">
+  <img src="https://img.shields.io/badge/AWS-Bedrock_·_Lambda_·_SNS_·_DynamoDB-2E8A6D" alt="AWS">
+  <img src="https://img.shields.io/badge/ElevenLabs-Scribe_·_TTS_·_Voice_cloning-2E8A6D" alt="ElevenLabs">
   <img src="https://img.shields.io/badge/license-MIT-555" alt="MIT license">
 </p>
 
