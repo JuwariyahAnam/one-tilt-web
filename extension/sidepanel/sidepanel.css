@@ -56,3 +56,32 @@ kbd { background: #f1eefb; border: 1px solid #d9d0f7; border-bottom-width: 2px; 
 #log li.warn { color: #b45309; }
 #log li.err { color: #c0392b; }
 .listening header { background: #5b3fc4; }
+
+/* ---------- polish & motion ---------- */
+@keyframes spUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes spFlow { from { background-position: 0% 50%; } to { background-position: 300% 50%; } }
+@keyframes spPop { 0% { transform: scale(1); } 40% { transform: scale(.9); } 75% { transform: scale(1.07); } 100% { transform: scale(1); } }
+@keyframes spPulse { 0% { box-shadow: 0 0 0 0 rgba(34,197,94,.55); } 100% { box-shadow: 0 0 0 8px rgba(34,197,94,0); } }
+@keyframes spBob { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-8deg); } }
+body { background: radial-gradient(120% 60% at 0% 0%, #efe9ff 0%, #f6f3ff 45%, #fbfaff 100%); }
+header { background: linear-gradient(120deg, #2a1d63, #5b3fc4); border-bottom: 0; box-shadow: 0 8px 24px rgba(42,29,99,.25); }
+header::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: linear-gradient(90deg, #F28C28, #ff6b8b, #8c7be0, #F28C28); background-size: 300% 100%; animation: spFlow 6s linear infinite; }
+header .logo { animation: spBob 3.2s ease-in-out infinite; transform-origin: 50% 80%; }
+.card { border: 1px solid rgba(91,63,196,.12); border-radius: 16px; box-shadow: 0 8px 22px rgba(59,42,128,.07); animation: spUp .5s cubic-bezier(.2,.9,.25,1.1) both; transition: box-shadow .25s, transform .25s; }
+.card:hover { box-shadow: 0 12px 28px rgba(59,42,128,.12); }
+.card:nth-of-type(2) { animation-delay: .06s; } .card:nth-of-type(3) { animation-delay: .12s; } .card:nth-of-type(4) { animation-delay: .18s; }
+.card:nth-of-type(5) { animation-delay: .24s; } .card:nth-of-type(6) { animation-delay: .3s; } .card:nth-of-type(7) { animation-delay: .36s; }
+button { transition: transform .15s ease, box-shadow .2s, background .2s, border-color .2s; }
+button:active:not(:disabled) { transform: scale(.95); }
+button.primary { background: linear-gradient(120deg, #3B2A80, #5b3fc4); box-shadow: 0 6px 16px rgba(59,42,128,.3); }
+.sim button { background: linear-gradient(180deg, #fff, #f7f4ff); border-radius: 12px; }
+.sim button:hover:not(:disabled) { box-shadow: 0 6px 16px rgba(59,42,128,.14); }
+.sim button.hit { background: linear-gradient(140deg, #ffa24a, #F28C28); color: var(--ink); border-color: #F28C28; animation: spPop .35s ease; box-shadow: 0 8px 20px rgba(242,140,40,.45); }
+.sim button.danger.hit { background: linear-gradient(140deg, #ff6b6b, #d63031); color: #fff; border-color: #d63031; }
+.pill.ok::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #22c55e; margin-right: 6px; vertical-align: 1px; animation: spPulse 1.4s ease-out infinite; }
+#headDot { filter: drop-shadow(0 3px 6px rgba(59,42,128,.45)); transform-box: fill-box; transform-origin: center; transition: cx .08s linear, cy .08s linear, fill .2s; }
+#headDot.flash { animation: spPop .35s ease; }
+.viz-bg { fill: url(#vizGrad); }
+#log li { animation: spUp .3s ease both; }
+.listening header { background: linear-gradient(120deg, #5b3fc4, #F28C28); }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }

@@ -65,11 +65,11 @@
     <div class="ot-wrap">
       <div class="ot-spot"></div>
       <div class="ot-pill" title="Show One-Tilt">${icon('logo')}<span>One-Tilt · tilt to start</span></div>
-      <div class="ot-modal-bg"><div class="ot-modal"></div></div>
       <div class="ot-panel ot-hidden" role="region" aria-label="One-Tilt Web choices">
         <div class="ot-toast" role="status" aria-live="polite"></div>
         <div class="ot-top">
-          <div class="ot-brand">${icon('logo')}One-Tilt</div>
+          <div class="ot-brand"><span class="ot-head">${icon('logo')}</span>One-Tilt</div>
+          <span class="ot-gest"></span>
           <div class="ot-title"></div>
           <div class="ot-badge">On-device</div>
           <div class="ot-dots"></div>
@@ -85,12 +85,14 @@
           <span class="ot-dev"><i class="ot-led"></i><span class="ot-devtxt">Headband not connected · keys Alt+Shift+Arrows</span></span>
         </div>
       </div>
+      <div class="ot-modal-bg"><div class="ot-modal"></div></div>
     </div>`;
   const $ = (s) => shadow.querySelector(s);
   const ui = {
     panel: $('.ot-panel'), title: $('.ot-title'), badge: $('.ot-badge'), dots: $('.ot-dots'),
     cards: Array.from(shadow.querySelectorAll('.ot-card')), toast: $('.ot-toast'), spot: $('.ot-spot'),
     pill: $('.ot-pill'), modalBg: $('.ot-modal-bg'), modal: $('.ot-modal'), led: $('.ot-led'), devtxt: $('.ot-devtxt'),
+    head: $('.ot-head'), gest: $('.ot-gest'), cardsBox: $('.ot-cards'),
   };
   (document.body || document.documentElement).appendChild(host);
 
@@ -110,9 +112,21 @@
     return { items: state.items, index: state.index, title: state.title, setIndex: (i) => { state.index = i; } };
   }
 
+  let lastSet = '';
+  let enterTimer = null;
+  function animateCards() {
+    ui.cardsBox.classList.remove('ot-enter');
+    void ui.cardsBox.offsetWidth; // restart the animation
+    ui.cardsBox.classList.add('ot-enter');
+    clearTimeout(enterTimer);
+    enterTimer = setTimeout(() => ui.cardsBox.classList.remove('ot-enter'), 750);
+  }
+
   function render() {
     const v = view();
     const start = Math.floor(v.index / PER_PAGE) * PER_PAGE;
+    const set = state.mode + '|' + start + '|' + v.items.slice(start, start + PER_PAGE).map((i) => i.label).join('|');
+    if (set !== lastSet) { lastSet = set; animateCards(); }
     ui.title.textContent = v.title || '';
     ui.badge.textContent = state.source === 'ai' ? 'AI · Amazon Bedrock' : 'On-device';
     ui.badge.classList.toggle('ai', state.source === 'ai');
@@ -243,10 +257,23 @@
   }
 
   // ---------- actions ----------
+  function pressCard(slot) {
+    const card = ui.cards[slot];
+    if (!card) return;
+    card.classList.remove('ot-press');
+    void card.offsetWidth;
+    card.classList.add('ot-press');
+    const burst = document.createElement('span');
+    burst.className = 'ot-burst';
+    card.appendChild(burst);
+    setTimeout(() => { card.classList.remove('ot-press'); burst.remove(); }, 600);
+  }
+
   function choose() {
     const v = view();
     const item = v.items[v.index];
     if (!item) return;
+    pressCard(v.index % PER_PAGE);
     buzz('B1');
     run(item);
   }
@@ -290,7 +317,7 @@
     state.mode = 'confirm';
     state.confirm = item;
     buzz('B2');
-    modal(`<div class="ot-modal-ic">${icon('alert')}</div><h2>${esc(item.label)}?</h2>
+    modal(`<div class="ot-modal-ic warn">${icon('alert')}</div><h2>${esc(item.label)}?</h2>
       <p>This might send or change something.</p>
       <div class="ot-keys"><span>Nod again = Yes</span><span>Tilt = No</span></div>`);
     say(`${item.label}. Nod again to confirm, or tilt to cancel.`);
@@ -392,6 +419,7 @@
     const what = listen.purpose === 'type' ? `Say what to type in “${esc(listen.item.label)}”`
       : listen.purpose === 'search' ? 'Say what to search for' : 'Say a command';
     modal(`<div class="ot-modal-ic pulse">${icon('mic')}</div><h2>Listening…</h2><p>${what}</p>
+      <div class="ot-wave"><i></i><i></i><i></i><i></i><i></i></div>
       <div class="ot-heard"></div>
       ${listen.purpose === 'command' ? '<div class="ot-ex">Try: “scroll down”, “play Arijit Singh songs”, “open sign in”, “go back”, “Arijit Singh ke gaane bajao”</div>' : ''}
       <div class="ot-keys"><span>Any head move = cancel</span></div>`);
@@ -520,13 +548,21 @@
     state.mode = 'help';
     let left = Number(settings.helpCountdown) || 5;
     buzz('B3');
-    const draw = () => modal(`<div class="ot-modal-ic">${icon('alert')}</div><h2>Sending a help alert to ${esc(settings.contactName)}</h2>
-      <div class="ot-big">${left}</div><div class="ot-keys"><span>Tilt or nod to cancel</span></div>`, true);
-    draw();
+    const total = left;
+    modal(`<h2>Sending a help alert to ${esc(settings.contactName)}</h2>
+      <div class="ot-ring"><svg viewBox="0 0 132 132"><circle class="bg" cx="66" cy="66" r="56"/><circle class="fg" cx="66" cy="66" r="56"/></svg><div class="ot-big">${left}</div></div>
+      <div class="ot-keys"><span>Tilt or nod to cancel</span></div>`, true);
+    const ring = ui.modal.querySelector('.fg');
+    ring.style.transition = `stroke-dashoffset ${total}s linear`;
+    requestAnimationFrame(() => requestAnimationFrame(() => { ring.style.strokeDashoffset = '352'; }));
     say(`Sending a help alert in ${left} seconds. Move your head to cancel.`);
     state.help = setInterval(() => {
       left -= 1;
-      if (left > 0) { draw(); return; }
+      if (left > 0) {
+        const big = ui.modal.querySelector('.ot-big');
+        if (big) { big.textContent = left; big.classList.remove('tick'); void big.offsetWidth; big.classList.add('tick'); }
+        return;
+      }
       clearInterval(state.help);
       sendHelp();
     }, 1000);
@@ -543,7 +579,7 @@
 
   async function sendHelp() {
     state.mode = 'busy';
-    modal(`<div class="ot-modal-ic">${icon('alert')}</div><h2>Sending help alert…</h2>`, true);
+    modal(`<div class="ot-spinner"></div><h2>Sending help alert…</h2>`, true);
     const res = await send({ type: 'help', payload: { url: location.href, title: document.title } });
     if (res && res.ok) {
       modal(`<div class="ot-modal-ic">${icon('check')}</div><h2>Help alert sent</h2><p>${esc(settings.contactName)} got a text message. Help is on the way.</p>`, true);
@@ -556,8 +592,20 @@
   }
 
   // ---------- gestures ----------
+  const GESTURE_LABEL = { LEFT: 'Tilt left', RIGHT: 'Tilt right', NOD: 'Nod', UP: 'Look up', HELP: 'Hold up' };
+  function showGesture(name) {
+    ui.head.className = 'ot-head';
+    void ui.head.offsetWidth;
+    ui.head.classList.add('g-' + name);
+    ui.gest.textContent = GESTURE_LABEL[name] || name;
+    ui.gest.classList.remove('show');
+    void ui.gest.offsetWidth;
+    ui.gest.classList.add('show');
+  }
+
   function onGesture(name) {
     if (!settings.active) { setActive(true); toast('One-Tilt is on'); return; }
+    showGesture(name);
     send({ type: 'stop-speaking' });
     switch (state.mode) {
       case 'help': if (name !== 'HELP') cancelHelp(); return;
